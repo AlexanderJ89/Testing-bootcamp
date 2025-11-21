@@ -22,6 +22,15 @@ describe("CapitalizedInput", () => {
     expect(errorMessage).toBeInTheDocument();
   });
 
+  it("ska inte visa felmeddelande när input endast innehåller bokstäver", () => {
+    render(<CapitalizedInput />);
+    const input = screen.getByRole("textbox");
+
+    fireEvent.change(input, { target: { value: "test" } });
+    expect(input.value).toBe("Test"); // första bokstaven stor
+    expect(screen.queryByText(/Enbart bokstäver är tillåtna!/i)).toBeNull();
+  });
+
   it("ska visa tom sträng utan fel när input är tom", () => {
     render(<CapitalizedInput />);
     const input = screen.getByRole("textbox");
